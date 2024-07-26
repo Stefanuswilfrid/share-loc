@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memz_clone/api/users/UserModel.dart';
+import 'package:memz_clone/api/users/UserStore.dart';
+import 'package:memz_clone/firebase_options.dart';
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/styles/fonts.dart';
 
@@ -10,6 +15,49 @@ class Splashview extends StatefulWidget {
 }
 
 class _SplashviewState extends State<Splashview> {
+  bool navigateNext = false;
+  UserModel? user;
+  bool _isEmailVerified = false;
+  bool isFirebaseInitialized = false;
+
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    setState(() {
+      isFirebaseInitialized = true;
+    });
+    return firebaseApp;
+  }
+
+  @override
+  void initState() {
+    _initializeFirebase().whenComplete(() {
+      if (FirebaseAuth.instance.currentUser?.uid != null) {
+        UserStore.getUserById(id: FirebaseAuth.instance.currentUser!.uid).then(
+          (value) => user = value,
+        );
+      }
+      _isEmailVerified =
+          FirebaseAuth.instance.currentUser?.emailVerified ?? false;
+
+      delayedNavigation();
+    });
+
+    super.initState();
+  }
+
+  delayedNavigation() {
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   getAuthNavigation(
+    //     context: context,
+    //     isEmailVerified: _isEmailVerified,
+    //     user: user,
+    //   );
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
