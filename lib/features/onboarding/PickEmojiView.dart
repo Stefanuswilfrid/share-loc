@@ -20,16 +20,18 @@ class _PickemojiviewState extends State<Pickemojiview> {
     return Scaffold(
       backgroundColor: MColors.background,
       body: EmojiPickerView(onSelect: (emoji) {
-        UserStore.updateUser(
-          user: user!,
-          newEmoji: emoji.toString(),
-        ).whenComplete(
-          () => Navigator.of(context).pushReplacement(
+        (emoji) async {
+          await UserStore.updateUser(
+            user: user!,
+            newEmoji: emoji.toString(),
+          );
+          print("forever");
+          Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => Onboardingsuccess(),
+              builder: (context) => const Onboardingsuccess(),
             ),
-          ),
-        );
+          );
+        };
       }),
     );
   }

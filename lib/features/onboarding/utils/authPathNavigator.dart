@@ -27,14 +27,16 @@ getAuthNavigation({
         builder: (context) => PickUsernameView(),
       ));
       return;
-    } else if (user.emoji == null) {
-      print('no username');
+    }
+    // else if (user.emoji == null) {
+    //   print('no username');
 
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => Pickemojiview(),
-      ));
-      return;
-    } else {
+    //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+    //     builder: (context) => Pickemojiview(),
+    //   ));
+    //   return;
+    // }
+    else {
       print('normal user sign in');
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(

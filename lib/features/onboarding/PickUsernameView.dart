@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memz_clone/api/users/UserModel.dart';
 import 'package:memz_clone/api/users/UserStore.dart';
+import 'package:memz_clone/features/onboarding/OnboardingSuccess.dart';
 import 'package:memz_clone/features/onboarding/PickEmojiView.dart';
+import 'package:memz_clone/features/onboarding/utils/usernameValidator.dart';
 
 import '../../screens/authentication/email_password/sign_in_screen.dart';
 import '../../styles/colors.dart';
@@ -123,7 +125,7 @@ class PickUsernameViewState extends State<PickUsernameView> {
                           ).whenComplete(
                             () => Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) => Pickemojiview(),
+                                builder: (context) => Onboardingsuccess(),
                               ),
                             ),
                           );
