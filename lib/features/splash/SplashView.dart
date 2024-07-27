@@ -1,20 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:memz_clone/api/users/UserModel.dart';
-import 'package:memz_clone/api/users/UserStore.dart';
-import 'package:memz_clone/firebase_options.dart';
-import 'package:memz_clone/styles/colors.dart';
-import 'package:memz_clone/styles/fonts.dart';
 
-class Splashview extends StatefulWidget {
-  const Splashview({super.key});
+import '../../api/users/UserStore.dart';
+import '../../firebase_options.dart';
+import '../../styles/colors.dart';
+import '../../styles/fonts.dart';
+import '../onboarding/utils/authPathNavigator.dart';
 
+class SplashView extends StatefulWidget {
   @override
-  State<Splashview> createState() => _SplashviewState();
+  SplashViewState createState() => SplashViewState();
 }
 
-class _SplashviewState extends State<Splashview> {
+class SplashViewState extends State<SplashView> {
   bool navigateNext = false;
   UserModel? user;
   bool _isEmailVerified = false;
@@ -49,38 +50,41 @@ class _SplashviewState extends State<Splashview> {
   }
 
   delayedNavigation() {
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   getAuthNavigation(
-    //     context: context,
-    //     isEmailVerified: _isEmailVerified,
-    //     user: user,
-    //   );
-    // });
+    Future.delayed(const Duration(seconds: 2), () {
+      getAuthNavigation(
+        context: context,
+        isEmailVerified: _isEmailVerified,
+        user: user,
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MColors.background,
-      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              flex: 1,
-              child: Image.asset(
-                'assets/SMYL_logo.png',
-                height: 160,
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Image.asset(
+                  'assets/SMYL_logo.png',
+                  height: 160,
+                ),
               ),
-            ),
-            Text(
-              'send me your location',
-              style: Branding.H22.copyWith(color: MColors.grayV3),
-            ),
-          ],
-        ),
-      ]),
+              Text(
+                'send me your location',
+                style: Branding.H22.copyWith(color: MColors.grayV3),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

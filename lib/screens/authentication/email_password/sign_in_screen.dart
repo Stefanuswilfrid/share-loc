@@ -1,12 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/styles/fonts.dart';
-import 'package:memz_clone/widgets/authentication/email_password/sign_in_form.dart';
-
 import '../../../features/mainViews/MainViews.dart';
 import '../../../firebase_options.dart';
+import '../../../res/custom_colors.dart';
+import '../../../widgets/authentication/email_password/register_form.dart';
+
+import '../../../widgets/authentication/email_password/sign_in_form.dart';
+// import 'user_info_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -18,6 +22,27 @@ class SignInScreen extends StatefulWidget {
 class SignInScreenState extends State<SignInScreen> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+
+  // Future<FirebaseApp> _initializeFirebase() async {
+  //   FirebaseApp firebaseApp = await Firebase.initializeApp(
+  //     options: DefaultFirebaseOptions.currentPlatform,
+  //   );
+
+  //   User? user = FirebaseAuth.instance.currentUser;
+
+  //   if (user != null) {
+  //     if (!mounted) return firebaseApp;
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(
+  //         builder: (context) => MainViews(
+  //             // user: user,
+  //         ),
+  //       ),
+  //     );
+  //   }
+
+  //   return firebaseApp;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +89,11 @@ class SignInScreenState extends State<SignInScreen> {
                       emailFocusNode: _emailFocusNode,
                       passwordFocusNode: _passwordFocusNode,
                     ),
+
+                    // SignInForm(
+                    //   emailFocusNode: _emailFocusNode,
+                    //   passwordFocusNode: _passwordFocusNode,
+                    // ),
                   ],
                 ),
               ),

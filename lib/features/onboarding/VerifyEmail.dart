@@ -1,6 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memz_clone/api/users/UserModel.dart';
+import 'package:memz_clone/features/onboarding/utils/authPathNavigator.dart';
 import 'package:memz_clone/styles/colors.dart';
-import 'package:memz_clone/styles/fonts.dart';
+
+import '../../api/users/UserStore.dart';
+import '../../screens/authentication/email_password/sign_in_screen.dart';
+import '../../styles/fonts.dart';
+import '../../utilsBoilerplate/authentication/email_password_auth/authentication.dart';
 
 class VerifyEmailView extends StatefulWidget {
   @override
@@ -9,9 +16,27 @@ class VerifyEmailView extends StatefulWidget {
 
 class VerifyEmailViewState extends State<VerifyEmailView> {
   bool _verificationEmailBeingSent = false;
+  late User? _user;
+  UserModel? userData;
 
   @override
   void initState() {
+    _user = FirebaseAuth.instance.currentUser;
+
+    if (_user != null) {
+      UserStore.getUserById(id: _user!.uid).then((value) {
+        userData = value;
+      });
+    }
+
+    if (_user?.emailVerified == true) {
+      getAuthNavigation(
+        context: context,
+        isEmailVerified: _user?.emailVerified,
+        user: userData,
+      );
+    }
+
     super.initState();
   }
 
@@ -43,7 +68,16 @@ class VerifyEmailViewState extends State<VerifyEmailView> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () async {},
+                      onPressed: () async {
+                        User? user = await Authentication.refreshUser(_user!);
+                        if (user?.emailVerified == true) {
+                          getAuthNavigation(
+                            context: context,
+                            isEmailVerified: user?.emailVerified,
+                            user: userData,
+                          );
+                        }
+                      },
                       child: Text('I verified my email',
                           style:
                               SubHeading.SH18.copyWith(color: MColors.black)),
@@ -68,6 +102,7 @@ class VerifyEmailViewState extends State<VerifyEmailView> {
                               setState(() {
                                 _verificationEmailBeingSent = true;
                               });
+                              await _user!.sendEmailVerification();
                               setState(() {
                                 _verificationEmailBeingSent = false;
                               });
@@ -81,7 +116,17 @@ class VerifyEmailViewState extends State<VerifyEmailView> {
                 ),
               ),
               GestureDetector(
-                onTap: () async {},
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+
+                  if (Navigator.canPop(context)) {
+                    print('canPop!');
+                    Navigator.of(context).pop();
+                  }
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => SignInScreen(),
+                  ));
+                },
                 child: Text(
                   'Sign in with a different account',
                   style: SubHeading.SH14,
