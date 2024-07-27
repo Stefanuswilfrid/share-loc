@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:memz_clone/features/onboarding/OnboardingSuccess.dart';
+import 'package:memz_clone/features/onboarding/PickEmojiView.dart';
 import 'package:memz_clone/features/onboarding/PickUsernameView.dart';
 import 'package:memz_clone/features/onboarding/VerifyEmail.dart';
 import 'package:memz_clone/features/splash/SplashView.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         fontFamily: 'OpenSans',
       ),
-      home: Splashview(),
+      home: VerifyEmailView(),
     );
   }
 }
