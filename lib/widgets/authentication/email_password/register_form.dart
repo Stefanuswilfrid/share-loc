@@ -1,8 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memz_clone/api/users/UserStore.dart';
+import 'package:memz_clone/features/onboarding/VerifyEmail.dart';
 import 'package:memz_clone/screens/authentication/email_password/sign_in_screen.dart';
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/styles/fonts.dart';
+import 'package:memz_clone/utilsBoilerplate/authentication/email_password_auth/authentication.dart';
+import 'package:memz_clone/utilsBoilerplate/authentication/email_password_auth/validator.dart';
+import 'package:memz_clone/widgets/custom_form_field.dart';
 
 import '../../../res/custom_colors.dart';
 

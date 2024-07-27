@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memz_clone/api/users/UserModel.dart';
 import 'package:memz_clone/api/users/UserStore.dart';
 import 'package:memz_clone/res/custom_colors.dart';
 
 import 'package:memz_clone/screens/authentication/email_password/register_screen.dart';
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/styles/fonts.dart';
+import 'package:memz_clone/utilsBoilerplate/authentication/email_password_auth/authentication.dart';
+import 'package:memz_clone/utilsBoilerplate/authentication/email_password_auth/validator.dart';
+import 'package:memz_clone/widgets/custom_form_field.dart';
 
 import '../../../features/onboarding/utils/authPathNavigator.dart';
 
@@ -96,6 +100,7 @@ class SignInFormState extends State<SignInForm> {
                         ),
                       ),
                       onPressed: () async {
+                        print("clicked?");
                         widget.emailFocusNode.unfocus();
                         widget.passwordFocusNode.unfocus();
 
@@ -111,13 +116,24 @@ class SignInFormState extends State<SignInForm> {
                             password: _passwordController.text,
                           );
                           if (user != null) {
-                            UserStore.getUserById(id: user.uid)
-                                .then((value) => getAuthNavigation(
-                                      context: context,
-                                      isEmailVerified: user.emailVerified,
-                                      user: value,
-                                    ));
+                            print("null? ${user != null}");
+                            UserModel? userModel =
+                                await UserStore.getUserById(id: user.uid);
+                            print("what ${userModel}");
+                            getAuthNavigation(
+                                context: context,
+                                isEmailVerified: user.emailVerified,
+                                user: userModel);
+                            // UserStore.getUserById(id: user.uid)
+                            //     .then((value) => {
+                            //           getAuthNavigation(
+                            //               context: context,
+                            //               isEmailVerified: user.emailVerified,
+                            //               user: value)
+                            //           // print("hadeh ${value}")
+                            //         });
                           }
+                          // print("in ${user}");
                         }
 
                         setState(() {

@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:memz_clone/api/notifications/NotificationStore.dart';
+import 'package:memz_clone/features/notifications/NotificationView.dart';
 
 import '../../api/users/UserModel.dart';
 import '../../api/users/UserStore.dart';
@@ -200,10 +201,10 @@ class MainViewsState extends State<MainViews> {
           : null,
       body: IndexedStack(
         children: <Widget>[
-          FriendsFeedView(),
-          AddPinView(),
+          // FriendsFeedView(),
+          // AddPinView(),
           NotificationView(),
-          MyProfileView(),
+          // MyProfileView(),
         ],
         index: _selectedIndex,
       ),

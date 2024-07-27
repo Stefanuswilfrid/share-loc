@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         fontFamily: 'OpenSans',
       ),
-      home: VerifyEmailView(),
+      home: SplashView(),
     );
   }
 }

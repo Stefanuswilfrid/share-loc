@@ -1,5 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memz_clone/api/users/UserModel.dart';
+import 'package:memz_clone/api/users/UserStore.dart';
+import 'package:memz_clone/features/onboarding/OnboardingSuccess.dart';
+import 'package:memz_clone/features/onboarding/PickEmojiView.dart';
+import 'package:memz_clone/features/onboarding/utils/usernameValidator.dart';
 
+import '../../screens/authentication/email_password/sign_in_screen.dart';
 import '../../styles/colors.dart';
 import '../../styles/fonts.dart';
 
@@ -9,12 +16,20 @@ class PickUsernameView extends StatefulWidget {
 }
 
 class PickUsernameViewState extends State<PickUsernameView> {
+  UserModel? user;
   final usernameController = TextEditingController();
   bool isUsernameTaken = false;
   String? errorMessage;
 
   @override
   void initState() {
+    UserStore.getUserById(id: FirebaseAuth.instance.currentUser?.uid)
+        .then((value) {
+      setState(() {
+        user = value;
+      });
+    });
+
     super.initState();
   }
 
@@ -69,7 +84,12 @@ class PickUsernameViewState extends State<PickUsernameView> {
                   ),
                   Column(children: [
                     GestureDetector(
-                      onTap: () async {},
+                      onTap: () async {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => SignInScreen(),
+                        ));
+                      },
                       child: Text(
                         'Sign in with a different account',
                         style: SubHeading.SH14,
@@ -77,7 +97,40 @@ class PickUsernameViewState extends State<PickUsernameView> {
                     ),
                     const SizedBox(height: 12),
                     ElevatedButton(
-                      onPressed: () async {},
+                      onPressed: () async {
+                        await UserStore.isUsernameTaken(
+                                username: usernameController.text)
+                            .then(
+                          (value) {
+                            setState(() {
+                              isUsernameTaken = value == true;
+                            });
+                          },
+                        );
+                        if (isUsernameTaken) {
+                          setState(() {
+                            errorMessage = 'Username is already taken';
+                          });
+                        } else {
+                          setState(() {
+                            errorMessage =
+                                validateUsername(usernameController.text);
+                          });
+                        }
+                        if (errorMessage == null && user != null) {
+                          print('valid username ${usernameController.text}');
+                          UserStore.updateUser(
+                            user: user!,
+                            newUsername: usernameController.text.toLowerCase(),
+                          ).whenComplete(
+                            () => Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => Onboardingsuccess(),
+                              ),
+                            ),
+                          );
+                        }
+                      },
                       child: Text('Next',
                           style:
                               SubHeading.SH18.copyWith(color: MColors.black)),

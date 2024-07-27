@@ -3,6 +3,7 @@ import 'package:memz_clone/features/mainViews/MainViews.dart';
 import 'package:memz_clone/features/onboarding/PickEmojiView.dart';
 import 'package:memz_clone/features/onboarding/PickUsernameView.dart';
 import 'package:memz_clone/features/onboarding/VerifyEmail.dart';
+import 'package:memz_clone/screens/authentication/email_password/sign_in_screen.dart';
 
 import '../../../api/users/UserModel.dart';
 
@@ -11,6 +12,7 @@ getAuthNavigation({
   UserModel? user,
   bool? isEmailVerified,
 }) {
+  print("signin ${user} ${isEmailVerified}");
   if (user != null) {
     if (isEmailVerified != true) {
       print('email not verified');
@@ -25,14 +27,16 @@ getAuthNavigation({
         builder: (context) => PickUsernameView(),
       ));
       return;
-    } else if (user.emoji == null) {
-      print('no username');
+    }
+    // else if (user.emoji == null) {
+    //   print('no username');
 
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => Pickemojiview(),
-      ));
-      return;
-    } else {
+    //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+    //     builder: (context) => Pickemojiview(),
+    //   ));
+    //   return;
+    // }
+    else {
       print('normal user sign in');
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(

@@ -1,6 +1,10 @@
 import 'package:emojis/emojis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memz_clone/api/follow/FollowModel.dart';
+import 'package:memz_clone/api/follow/FollowStore.dart';
+import 'package:memz_clone/api/pins/PinModel.dart';
+import 'package:memz_clone/api/pins/PinStore.dart';
 import 'package:memz_clone/api/users/UserModel.dart';
 import 'package:memz_clone/components/scaffold/CommonAppBar.dart';
 import 'package:memz_clone/components/scaffold/CommonScaffold.dart';

@@ -5,6 +5,7 @@ import 'package:memz_clone/api/notifications/NotificationModel.dart';
 import '../../features/profile/UserProfileView.dart';
 import '../../styles/colors.dart';
 import '../../styles/fonts.dart';
+import 'package:intl/intl.dart';
 
 class NotificationTile extends StatefulWidget {
   final FollowRequestNotificationModel notificationData;
