@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memz_clone/features/mainViews/MainViews.dart';
 import 'package:memz_clone/features/onboarding/PickEmojiView.dart';
 import 'package:memz_clone/features/onboarding/PickUsernameView.dart';
 import 'package:memz_clone/features/onboarding/VerifyEmail.dart';

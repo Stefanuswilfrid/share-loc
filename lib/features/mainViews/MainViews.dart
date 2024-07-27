@@ -199,7 +199,12 @@ class MainViewsState extends State<MainViews> {
             )
           : null,
       body: IndexedStack(
-        children: <Widget>[],
+        children: <Widget>[
+          FriendsFeedView(),
+          AddPinView(),
+          NotificationView(),
+          MyProfileView(),
+        ],
         index: _selectedIndex,
       ),
       bottomNavigationBar: BottomBar(
