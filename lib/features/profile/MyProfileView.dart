@@ -1,10 +1,18 @@
 import 'package:emojis/emojis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:memz_clone/api/pins/PinModel.dart';
+import 'package:memz_clone/api/pins/PinStore.dart';
 import 'package:memz_clone/api/users/UserModel.dart';
+import 'package:memz_clone/components/map/MultiPinMap.dart';
 import 'package:memz_clone/components/scaffold/CommonAppBar.dart';
 import 'package:memz_clone/components/scaffold/CommonScaffold.dart';
+import 'package:memz_clone/components/scaffold/PullToRefresh.dart';
+import 'package:memz_clone/features/editProfile/EditProfileView.dart';
+import 'package:memz_clone/features/profile/tabs/PinsGridView.dart';
+import 'package:memz_clone/features/profile/tabs/ProfileAboutTab.dart';
+import 'package:memz_clone/features/profile/utils/getProfileData.dart';
 import 'package:memz_clone/styles/fonts.dart';
 
 class MyProfileView extends StatefulWidget {
