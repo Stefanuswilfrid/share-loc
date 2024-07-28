@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:memz_clone/components/map/style.dart';
+import 'package:memz_clone/utils/locationUtils.dart';
 
 import '../../api/pins/PinModel.dart';
 import 'landmarks.dart';

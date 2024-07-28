@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:intl/intl.dart';
+import 'package:memz_clone/features/profile/FollowsListView.dart';
 
 import '../../../api/follow/FollowModel.dart';
 import '../../../styles/fonts.dart';
