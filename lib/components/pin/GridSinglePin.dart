@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:memz_clone/api/pins/PinModel.dart';
+import 'package:memz_clone/features/pinPost/PinPostView.dart';
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/components/map/Map.dart';
 

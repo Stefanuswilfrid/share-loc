@@ -43,18 +43,17 @@ class FollowsListViewState extends State<FollowsListView> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-      title: widget.title,
-      body: Column(
-        children: [
-          ...usersList.map(
-            (user) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: UserTile(user: user),
-            ),
-          )
-        ],
-      ),
-    );
+    return CommonScaffold(title: widget.title, body: Text("Hello")
+        // Column(
+        //   children: [
+        //     ...usersList.map(
+        //       (user) => Padding(
+        //         padding: const EdgeInsets.only(bottom: 10),
+        //         child: UserTile(user: user),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        );
   }
 }

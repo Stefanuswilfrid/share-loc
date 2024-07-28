@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:memz_clone/api/notifications/NotificationStore.dart';
 import 'package:memz_clone/features/notifications/NotificationView.dart';
+import 'package:memz_clone/features/profile/MyProfileView.dart';
 
 import '../../api/users/UserModel.dart';
 import '../../api/users/UserStore.dart';
@@ -204,7 +205,7 @@ class MainViewsState extends State<MainViews> {
           // FriendsFeedView(),
           // AddPinView(),
           NotificationView(),
-          // MyProfileView(),
+          MyProfileView(),
         ],
         index: _selectedIndex,
       ),
