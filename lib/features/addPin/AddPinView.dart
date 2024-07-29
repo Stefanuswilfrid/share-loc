@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:memz_clone/components/button/Button.dart';
+import 'package:memz_clone/components/location/CurrentLocation.dart';
 import 'package:memz_clone/components/scaffold/CommonScaffold.dart';
 import 'package:memz_clone/features/addPin/AddCaptionView.dart';
 import 'package:memz_clone/features/addPin/AddPinTile.dart';

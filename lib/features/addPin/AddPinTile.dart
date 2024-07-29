@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:memz_clone/components/map/CurrentLocationMap.dart';
 
 import 'package:memz_clone/components/shimmer/ShimmerBox.dart';
 import 'package:memz_clone/styles/colors.dart';
