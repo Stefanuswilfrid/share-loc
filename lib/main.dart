@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 
 import 'package:memz_clone/features/splash/SplashView.dart';
+import 'package:memz_clone/screens/database/db_dashboard_screen.dart';
 
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
-    await FlutterConfig.loadEnvVariables();
     cameras = await availableCameras();
   } on CameraException catch (e) {
     log('Error in fetching the cameras: $e');
