@@ -2,7 +2,6 @@ import 'package:emojis/emojis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memz_clone/components/map/Map.dart';
-
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:memz_clone/api/pins/PinModel.dart';
@@ -11,7 +10,6 @@ import 'package:memz_clone/components/pin/MyPostContextButton.dart';
 import 'package:memz_clone/features/mapView/MapView.dart';
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/styles/fonts.dart';
-
 import '../../api/users/UserModel.dart';
 import '../../features/profile/UserProfileView.dart';
 import '../shimmer/ShimmerBox.dart';
@@ -28,6 +26,7 @@ class PinPost extends StatefulWidget {
     this.isLoading = false,
     this.onRefresh,
   });
+
   @override
   State<PinPost> createState() => PinPostState();
 }
@@ -39,6 +38,7 @@ class PinPostState extends State<PinPost> {
 
   @override
   void initState() {
+    super.initState();
     UserStore.getUserById(id: widget.pin.creatorId).then(
       (value) => setState(() {
         userData = value;
@@ -50,8 +50,6 @@ class PinPostState extends State<PinPost> {
         isMyPost = true;
       });
     }
-
-    super.initState();
   }
 
   void onProfileTap() {
@@ -81,7 +79,8 @@ class PinPostState extends State<PinPost> {
   }
 
   Widget getPostBodyWithPics() {
-    if (widget.pin.imgUrls != null) {
+    if (widget.pin.imgUrls != null && widget.pin.imgUrls!.isNotEmpty) {
+      print("img ${widget.pin.imgUrls}");
       return Stack(
         alignment: AlignmentDirectional.topEnd,
         children: [
@@ -91,10 +90,6 @@ class PinPostState extends State<PinPost> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: CachedNetworkImage(
-              // memCacheWidth: 1000,
-              // memCacheHeight: 1000,
-              // maxWidthDiskCache: 1000,
-              // maxHeightDiskCache: 1000,
               imageUrl: widget.pin.imgUrls!.first,
               height: 500,
               fit: BoxFit.cover,
@@ -160,50 +155,47 @@ class PinPostState extends State<PinPost> {
       children: [
         GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () {
-              onProfileTap();
-            },
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            onTap: onProfileTap,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      userData?.emoji != null
-                          ? userData!.emoji!
-                          : Emojis.wavingHand,
-                      style: SubHeading.SH22,
+                    Row(
+                      children: [
+                        Text(
+                          userData?.emoji ?? Emojis.wavingHand,
+                          style: SubHeading.SH22,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(userData?.username ?? '', style: Heading.H14),
+                        const SizedBox(width: 4),
+                      ],
                     ),
-                    const SizedBox(width: 6),
-                    Text(userData?.username ?? '', style: Heading.H14),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    if (isMyPost)
+                      MyPostContextButton(
+                        pin: widget.pin,
+                        onRefresh: widget.onRefresh,
+                      ),
                   ],
                 ),
-                if (isMyPost)
-                  MyPostContextButton(
-                    pin: widget.pin,
-                    onRefresh: widget.onRefresh,
-                  ),
-              ]),
-              if (widget.pin.caption?.isNotEmpty == true)
-                Text(widget.pin.caption!, style: Paragraph.P14),
-              const SizedBox(height: 8),
-            ])),
+                if (widget.pin.caption?.isNotEmpty == true)
+                  Text(widget.pin.caption!, style: Paragraph.P14),
+                const SizedBox(height: 8),
+              ],
+            )),
         GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () {
-              onPostTap();
-            },
-            child: widget.pin.imgUrls != null
+            onTap: onPostTap,
+            child: widget.pin.imgUrls != null && widget.pin.imgUrls!.isNotEmpty
                 ? getPostBodyWithPics()
                 : getPostBodyWithoutPics()),
         const SizedBox(height: 8),
         Text(
           '${DateFormat.yMMMd().format(widget.pin.creationTime)} ${DateFormat.jm().format(widget.pin.creationTime)}',
           style: Paragraph.P12.copyWith(color: MColors.grayV5),
-        )
+        ),
       ],
     );
   }

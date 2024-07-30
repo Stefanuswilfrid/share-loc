@@ -29,7 +29,6 @@ class UserStore {
     String? id,
   }) async {
     final userDoc = usersDb.doc(id);
-    print("what? ${userDoc}");
     return userDoc
         .get()
         .then((e) => UserModel.fromJson(e.data() as Map<String, dynamic>))

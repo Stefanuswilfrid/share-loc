@@ -22,10 +22,13 @@ class PinStore {
     var uuid = const Uuid();
     final String pinId = uuid.v4();
     String? picUrl;
+    print("add called?");
 
     if (imgUrls != null) {
       await UploadStorage.uploadFile(filePath: imgUrls.first).then((value) {
         print('picUrl!!! $value');
+        print("img url not null?");
+
         picUrl = value;
       });
     }
