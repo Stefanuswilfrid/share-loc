@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:memz_clone/api/users/UserModel.dart';
 import 'package:memz_clone/api/users/UserStore.dart';
 import 'package:memz_clone/components/scaffold/CommonScaffold.dart';
+import 'package:memz_clone/components/user/UserTile.dart';
 
 import '../../api/follow/FollowModel.dart';
 
@@ -43,17 +44,18 @@ class FollowsListViewState extends State<FollowsListView> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(title: widget.title, body: Text("Hello")
-        // Column(
-        //   children: [
-        //     ...usersList.map(
-        //       (user) => Padding(
-        //         padding: const EdgeInsets.only(bottom: 10),
-        //         child: UserTile(user: user),
-        //       ),
-        //     )
-        //   ],
-        // ),
-        );
+    return CommonScaffold(
+      title: widget.title,
+      body: Column(
+        children: [
+          ...usersList.map(
+            (user) => Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: UserTile(user: user),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

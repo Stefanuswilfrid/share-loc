@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memz_clone/features/mainViews/MainViews.dart';
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/styles/fonts.dart';
 
@@ -29,11 +30,11 @@ class Onboardingsuccess extends StatelessWidget {
                 Column(children: [
                   ElevatedButton(
                     onPressed: () {
-                      // Navigator.of(context).pushReplacement(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => MainViews(),
-                      //   ),
-                      // );
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => MainViews(),
+                        ),
+                      );
                     },
                     child: Text('Get Started',
                         style: SubHeading.SH18.copyWith(color: MColors.black)),

@@ -1,14 +1,13 @@
 import 'dart:io';
-
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:memz_clone/components/map/CurrentLocationMap.dart';
-
 import 'package:memz_clone/components/shimmer/ShimmerBox.dart';
 import 'package:memz_clone/styles/colors.dart';
 import 'package:memz_clone/styles/fonts.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'image_picker_web.dart'
+    if (dart.library.io) 'image_picker_mobile.dart'; // Conditional import
 
 import '../../components/button/Button.dart';
 
@@ -25,22 +24,17 @@ class AddPinTile extends StatelessWidget {
     this.picPath,
   });
 
-  getImageFromGallery() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      onPicChange(image.path);
-    }
+  Future<void> _pickImageFromGallery() async {
+    final path = await getImageFromGallery();
+    print("patj ${path}");
+    onPicChange(path);
   }
 
-  getImageFromCamera() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+  Future<void> _pickImageFromCamera() async {
+    final path = await getImageFromCamera();
+    print("patj ${path}");
 
-    if (image != null) {
-      onPicChange(image.path);
-    }
+    onPicChange(path);
   }
 
   @override
@@ -59,36 +53,41 @@ class AddPinTile extends StatelessWidget {
             image: picPath != null
                 ? DecorationImage(
                     fit: BoxFit.cover,
-                    image: FileImage(File(picPath!)),
+                    image: kIsWeb
+                        ? NetworkImage(picPath!)
+                        : FileImage(File(picPath!)) as ImageProvider,
                   )
                 : null,
           ),
           child: picPath == null
-              ? Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Text('Add a picture', style: SubHeading.SH18),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Button(
-                        width: 130,
-                        label: 'Camera',
-                        onTap: getImageFromCamera,
-                        type: ButtonType.primary,
-                        size: ButtonSize.small,
-                      ),
-                      const SizedBox(width: 8),
-                      Button(
-                        width: 130,
-                        label: 'Camera Roll',
-                        onTap: getImageFromGallery,
-                        type: ButtonType.primary,
-                        size: ButtonSize.small,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 120),
-                ])
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('Add a picture', style: SubHeading.SH18),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Button(
+                          width: 130,
+                          label: 'Camera',
+                          onTap: _pickImageFromCamera,
+                          type: ButtonType.primary,
+                          size: ButtonSize.small,
+                        ),
+                        const SizedBox(width: 8),
+                        Button(
+                          width: 130,
+                          label: 'Camera Roll',
+                          onTap: _pickImageFromGallery,
+                          type: ButtonType.primary,
+                          size: ButtonSize.small,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 120),
+                  ],
+                )
               : Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
@@ -123,7 +122,8 @@ class AddPinTile extends StatelessWidget {
                   child: CurrentLocationMap(
                     location: location,
                     isLoading: isLoading,
-                  ))
+                  ),
+                )
               : ShimmerBox(
                   height: 200,
                   width: 150,

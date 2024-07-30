@@ -69,6 +69,7 @@ class AddPinViewState extends State<AddPinView> {
   }
 
   void onPicChange(String? path) {
+    print("picChange ${path}");
     setState(() {
       picPath = path;
     });
