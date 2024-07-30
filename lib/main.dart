@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:memz_clone/features/onboarding/OnboardingSuccess.dart';
-import 'package:memz_clone/features/onboarding/PickEmojiView.dart';
-import 'package:memz_clone/features/onboarding/PickUsernameView.dart';
-import 'package:memz_clone/features/onboarding/VerifyEmail.dart';
+import 'package:flutter_config/flutter_config.dart';
+
 import 'package:memz_clone/features/splash/SplashView.dart';
 
 List<CameraDescription> cameras = [];
@@ -13,6 +11,7 @@ List<CameraDescription> cameras = [];
 Future<void> main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
+    await FlutterConfig.loadEnvVariables();
     cameras = await availableCameras();
   } on CameraException catch (e) {
     log('Error in fetching the cameras: $e');
